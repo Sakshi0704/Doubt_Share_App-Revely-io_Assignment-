@@ -42,6 +42,8 @@ public class UserServiceImplement implements UserService{
 		if(email==null || email.isBlank() || email.isEmpty())
 			throw new InvalidArgumentException("Invalid email provided Or email should not null or blank or empty");
 		
+		System.out.println("inside the specific user details");
+		
 		Optional<Users> userOpt = userRepository.findByEmail(email);
 		if(userOpt.isEmpty()) {
 			throw new RecordNotFoundException("With email "+email+" User not exists");

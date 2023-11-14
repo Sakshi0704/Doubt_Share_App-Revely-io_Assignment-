@@ -26,8 +26,10 @@ public class UserDetailsServiceImplementation implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
+		//System.out.println("email "+email );
 		Optional<Users> opt = userRepo.findByEmail(email);
-		
+	
+		//System.out.println(opt.get().getEmail());
 		 if(opt.isPresent()) {
 			 Users user = opt.get();
 		
@@ -35,6 +37,8 @@ public class UserDetailsServiceImplementation implements UserDetailsService{
 			 List<GrantedAuthority> authorities = new ArrayList<>();
 				 authorities.add(new SimpleGrantedAuthority(user.getUserType().toString())); 
 			 
+//				 System.out.println("inside load user by username");
+//				 System.out.println(opt.get().getEmail());
 		      return new User(user.getEmail(), user.getPassword(), authorities);
 		      
 		 }else {

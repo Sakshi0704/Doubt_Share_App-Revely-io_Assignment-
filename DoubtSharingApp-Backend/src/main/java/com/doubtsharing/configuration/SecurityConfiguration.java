@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,10 +23,11 @@ public class SecurityConfiguration {
 	 // http://localhost:8085/doubt-sharing-app/auth/register-student
 	 // http://localhost:8085/doubt-sharing-app/auth/register-teacher
 	// http://localhost:8085/doubt-sharing-app/auth/users 
-
+	//http://localhost:8085/doubt-sharing-app/auth/user/signIn
 	public static final String[] PUBLIC_URLS = {"/doubt-sharing-app/auth/register-student",
 												"/doubt-sharing-app/auth/register-teacher",
-												"/doubt-sharing-app/auth/users"
+												"/doubt-sharing-app/auth/users",
+												"/doubt-sharing-app/auth/user/signIn"
 						};
 	
 	
@@ -38,10 +40,8 @@ public class SecurityConfiguration {
 						};
 
 	//http://localhost:8085/doubt-sharing-app/auth/user/signOut
-	//http://localhost:8085/doubt-sharing-app/auth/user/signIn
 	public static final String STUDENT_TUTOR_URLS[] = {
 			"/doubt-sharing-app/auth/users",
-			"/doubt-sharing-app/auth/user/signIn",
 			"/doubt-sharing-app/auth/user/signOut",
 	};
 	
@@ -83,9 +83,9 @@ public class SecurityConfiguration {
 		})
 		.csrf(csrf -> csrf.disable())
 		.addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
-		.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class);
-		//.formLogin(Customizer.withDefaults())
-//		.httpBasic(Customizer.withDefaults());
+		.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
+		.formLogin(Customizer.withDefaults())
+		.httpBasic(Customizer.withDefaults());
 		
 		return http.build();	
 		

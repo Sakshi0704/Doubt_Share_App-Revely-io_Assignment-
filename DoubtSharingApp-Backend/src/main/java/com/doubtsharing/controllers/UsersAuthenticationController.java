@@ -3,12 +3,13 @@ package com.doubtsharing.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,17 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.doubtsharing.dto.StudentDTO;
 import com.doubtsharing.dto.TutorDTO;
-import com.doubtsharing.enums.Subject;
+
 import com.doubtsharing.enums.UserType;
-import com.doubtsharing.enums.UsersGrade;
+
 import com.doubtsharing.models.Users;
 import com.doubtsharing.services.TutorAvailabilityService;
 import com.doubtsharing.services.UserService;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
+
 
 @RestController
 @RequestMapping("/doubt-sharing-app/auth")
@@ -86,20 +85,23 @@ public class UsersAuthenticationController {
 	// http://localhost:8085/doubt-sharing-app/auth/user/signIn
 	public ResponseEntity<Users> logInUserHandler(Authentication auth) {
 
-		Users user = userService.retriveSpecificUser(auth.getUsername());
+		System.out.println(auth.getName()+"...................................");
+		Users user = userService.retriveSpecificUser(auth.getName());
 
 		if (user.getUserType().equals(UserType.ROLE_TUTOR)) {
 			tutorAvailabilityService.updateTutorAvailabilityAsAvailable(user.getEmail());
 		}
-
+		System.out.println("Sakshi ---- inside the signIn");
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 	@GetMapping("/user/signOut")
 	// http://localhost:8085/doubt-sharing-app/auth/user/signOut
-	public ResponseEntity<String> signOutUserHandler(Authentication auth) {
+	public ResponseEntity<String> signOutUserHandler() {
 		
-		Users user = userService.retriveSpecificUser(auth.getUsername());
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		Users user = userService.retriveSpecificUser(authentication.getName());
 
 		if (user.getUserType().equals(UserType.ROLE_TUTOR)) {
 			tutorAvailabilityService.updateTutorAvailabilityAsNotAvailable(user.getEmail());

@@ -26,13 +26,13 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("inside doFilter....");
+		//System.out.println("inside doFilter....");
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
-		if (null != authentication) {
+		if (authentication!=null) {
 			
-			System.out.println("auth.getAuthorities " + authentication.getAuthorities());
+			//System.out.println("auth.getAuthorities " + authentication.getAuthorities());
 			
 			SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
 							// which we doesn't share for per user
@@ -68,8 +68,7 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter{
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 			
-		       boolean result = request.getServletPath().equals("/doubt-sharing-app/auth/student/signIn") 
-		    		   || request.getServletPath().equals("/doubt-sharing-app/auth/tutor/signIn");
+		       boolean result = request.getServletPath().equals("/doubt-sharing-app/auth/user/signIn");
 		    		   
 		       return !result;
 		}
