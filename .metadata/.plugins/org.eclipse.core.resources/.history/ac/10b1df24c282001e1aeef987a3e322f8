@@ -1,0 +1,120 @@
+package com.doubtsharing.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.doubtsharing.dto.StudentDTO;
+import com.doubtsharing.dto.TutorDTO;
+import com.doubtsharing.enums.Subject;
+import com.doubtsharing.enums.UserType;
+import com.doubtsharing.enums.UsersGrade;
+import com.doubtsharing.models.Users;
+import com.doubtsharing.services.TutorAvailabilityService;
+import com.doubtsharing.services.UserService;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
+@RestController
+@RequestMapping("/doubt-sharing-app/auth")
+public class UsersAuthenticationController {
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private TutorAvailabilityService tutorAvailabilityService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	/*
+	 * { "userName" : "Sakshi", "email" : "sakshi0704@gmail.com", "password" :
+	 * "12345", "userLanguage" : "HINDI", "class_grade" : "1" }
+	 *
+	 */
+	
+	/*
+	 * { "userName" : "Sakshi", "email" : "sakshi0704@gmail.com", "password" :
+	 * "12345", "userLanguage" : "HINDI", "min_grade" : "1" , "max_grade" : "10", "subjectExpertise"="English"}
+	 *
+	 */
+
+	@PostMapping("/register-student")
+	// http://localhost:8085/doubt-sharing-app/auth/register-student
+	public ResponseEntity<Users> registerUserAsStudent(@Valid @RequestBody StudentDTO studentDTO) {
+		
+		Users user = new Users(studentDTO);
+		
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+		Users registerUser = userService.registerUser(user);
+
+		return new ResponseEntity<>(registerUser, HttpStatus.CREATED);
+	}
+
+	@PostMapping("/register-teacher")
+	// http://localhost:8085/doubt-sharing-app/auth/register-teacher
+	public ResponseEntity<Users> registerUserAsTutor(@Valid @RequestBody TutorDTO tutorDTO) {
+
+		System.out.println("inside the register tutor handler");
+		
+		Users user = new Users(tutorDTO);
+		
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		
+		Users registerUser = userService.registerUser(user);
+
+		return new ResponseEntity<>(registerUser, HttpStatus.CREATED);
+	}
+
+	@GetMapping("/user/signIn")
+	// http://localhost:8085/doubt-sharing-app/auth/user/signIn
+	public ResponseEntity<Users> logInUserHandler(Authentication auth) {
+
+		Users user = userService.retriveSpecificUser(auth.getUsername());
+
+		if (user.getUserType().equals(UserType.ROLE_TUTOR)) {
+			tutorAvailabilityService.updateTutorAvailabilityAsAvailable(user.getEmail());
+		}
+
+		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
+
+	@GetMapping("/user/signOut")
+	// http://localhost:8085/doubt-sharing-app/auth/user/signOut
+	public ResponseEntity<String> signOutUserHandler(Authentication auth) {
+		
+		Users user = userService.retriveSpecificUser(auth.getUsername());
+
+		if (user.getUserType().equals(UserType.ROLE_TUTOR)) {
+			tutorAvailabilityService.updateTutorAvailabilityAsNotAvailable(user.getEmail());
+		}
+
+		return new ResponseEntity<>(user.getUserName() + " is logout successfully", HttpStatus.OK);
+	}
+
+	@GetMapping("/users")
+	// to check so give permission to assignment even with authentication
+	// http://localhost:8085/doubt-sharing-app/auth/users
+	public ResponseEntity<List<Users>> retriveAllUsersHandler() {
+
+		List<Users> users = userService.retriveAllUsers();
+
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+
+}

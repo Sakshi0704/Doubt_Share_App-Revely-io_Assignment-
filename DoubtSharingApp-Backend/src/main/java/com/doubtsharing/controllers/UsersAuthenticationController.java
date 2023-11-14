@@ -48,8 +48,9 @@ public class UsersAuthenticationController {
 	 */
 	
 	/*
-	 * { "userName" : "Sakshi", "email" : "sakshi0704@gmail.com", "password" :
-	 * "12345", "userLanguage" : "HINDI", "min_grade" : "1" , "max_grade" : "10", "subjectExpertise"="English"}
+	 * { "userName" : "Ravi", "email" : "ravi0704@gmail.com", "password" :
+			"12345", "userLanguage" : "HINDI", "min_grade" : "1" , "max_grade" : "10", 
+    			"subjectExpertise": "ENGLISH"}
 	 *
 	 */
 

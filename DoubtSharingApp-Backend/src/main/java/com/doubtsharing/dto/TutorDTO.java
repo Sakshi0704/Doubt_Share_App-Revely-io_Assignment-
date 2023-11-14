@@ -44,7 +44,7 @@ public class TutorDTO {
 	@Enumerated(EnumType.STRING)
 	private UsersGrade min_grade; // for tutor
 	
-	@NotNull(message = "Grade must not null")
+	@NotNull(message = "Max Class Grade must not null")
 	@Enumerated(EnumType.STRING)
 	private UsersGrade max_grade;  // for tutor
 		
