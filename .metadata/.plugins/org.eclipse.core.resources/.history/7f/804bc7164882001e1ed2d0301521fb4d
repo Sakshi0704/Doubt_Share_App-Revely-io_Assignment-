@@ -1,0 +1,105 @@
+package com.doubtsharing.services;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+import com.doubtsharing.enums.TutorAvailabilityStatus;
+import com.doubtsharing.exception.InvalidArgumentException;
+import com.doubtsharing.exception.RecordNotFoundException;
+import com.doubtsharing.models.TutorAvailability;
+import com.doubtsharing.repository.TutorAvailabilityRepository;
+import com.doubtsharing.repository.UsersRepository;
+
+@Service
+public class TutorAvailabilityServiceImpl implements TutorAvailabilityService {
+
+	@Autowired
+	private TutorAvailabilityRepository tutorAvailablityRepo;
+	
+	@Autowired
+	private UsersRepository userRepo;
+	
+	@Override
+	@Scheduled(fixedRate = 1000)
+	public int countOnlineTutors() throws RecordNotFoundException{
+		
+		LocalDateTime threeSecondBeforeTime = LocalDateTime.now().minusSeconds(3);
+		
+		int onlineTutorCount = tutorAvailablityRepo
+				.countAvailableTutorsByLastPingTimeUnderThreeSecondFromNow(threeSecondBeforeTime, LocalDateTime.now());
+		
+        if (onlineTutorCount > 0) {
+            System.out.println(onlineTutorCount + " tutors are online available");
+            return onlineTutorCount;
+        }else{
+            throw new RecordNotFoundException("No tutors available online currently");
+        }
+	}
+	
+    @Scheduled(fixedRate = 3000) // Run every minute
+    public void updateLastPingTimeForAvailableTutors() {
+        
+    	tutorAvailablityRepo.updateLastPingTimeOfOnlineAvaiableTutor(TutorAvailabilityStatus.AVAILABLE.toString(),
+    								LocalDateTime.now());
+    
+    }
+
+	@Override
+	public List<TutorAvailability> avaialbleTutors() throws RecordNotFoundException {
+		List<TutorAvailability> onlineAvailableTutors = tutorAvailablityRepo.findTutorByAvailabilityStatus(TutorAvailabilityStatus.AVAILABLE.toString());
+        if (onlineAvailableTutors.isEmpty()) {
+            throw new RecordNotFoundException("No Tutors Available Online Currently");
+        } 
+       return onlineAvailableTutors;
+	}
+
+	@Override
+	public TutorAvailability updateTutorAvailabilityAsAvailable(String email) throws InvalidArgumentException {
+		
+		if(email == null || email.isBlank() || email.isEmpty()) {
+			throw new InvalidArgumentException("Invalid argument is given");
+		}
+		
+		Optional<TutorAvailability> tutorAvailabilityOpt =  tutorAvailablityRepo.findTutorAvailabilityByEmail(email);
+		
+		TutorAvailability tutorAvailability = null;
+		
+		if(tutorAvailabilityOpt.isEmpty()) {
+			tutorAvailability = new TutorAvailability();
+			tutorAvailability.setUser(userRepo.findByEmail(email).get());
+			tutorAvailability.setOnlineStatus(TutorAvailabilityStatus.AVAILABLE);
+		}else {
+			tutorAvailability = tutorAvailabilityOpt.get();
+			if(tutorAvailability.getOnlineStatus().equals(TutorAvailabilityStatus.NOT_AVAILABLE)) {
+				tutorAvailability.setOnlineStatus(TutorAvailabilityStatus.AVAILABLE);
+			}
+		}
+		return tutorAvailablityRepo.save(tutorAvailability);
+	}
+
+	@Override
+	public TutorAvailability updateTutorAvailabilityAsNotAvailable(String email) throws InvalidArgumentException {
+		// TODO Auto-generated method stub
+		if(email == null || email.isBlank() || email.isEmpty()) {
+			throw new InvalidArgumentException("Invalid argument is given");
+		}
+		
+		Optional<TutorAvailability> tutorAvailabilityOpt =  tutorAvailablityRepo.findTutorAvailabilityByEmail(email);
+		
+		if(tutorAvailabilityOpt.isEmpty()) {
+			throw new RecordNotFoundException("No tutor availability found with this email "+email);
+		}
+		
+		TutorAvailability tutorAvailability =  tutorAvailabilityOpt.get();
+		tutorAvailability.setOnlineStatus(TutorAvailabilityStatus.NOT_AVAILABLE);
+	
+		return tutorAvailablityRepo.save(tutorAvailability);
+	}
+
+}

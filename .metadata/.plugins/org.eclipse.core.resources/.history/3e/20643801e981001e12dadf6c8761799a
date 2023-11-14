@@ -1,0 +1,9 @@
+package com.doubtsharing.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.doubtsharing.models.TutorAvailability;
+
+public interface TutorAvailabilityRepository extends JpaRepository<TutorAvailability, Integer>{
+
+}

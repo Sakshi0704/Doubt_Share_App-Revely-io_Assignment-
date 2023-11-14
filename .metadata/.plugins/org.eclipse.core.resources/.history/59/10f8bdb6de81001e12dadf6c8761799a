@@ -1,0 +1,11 @@
+package com.doubtsharing.services;
+
+import java.util.List;
+
+import com.doubtsharing.models.Doubt;
+
+public interface DoubtHandlingService {
+	
+	public List<Doubt> getDoubtRequestHistoryByStudentId(Integer studentId);
+	
+}

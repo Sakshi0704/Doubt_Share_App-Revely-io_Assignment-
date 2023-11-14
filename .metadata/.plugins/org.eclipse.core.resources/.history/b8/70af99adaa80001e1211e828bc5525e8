@@ -1,0 +1,50 @@
+package com.doubtsharing.services;
+
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.doubtsharing.exception.DuplicateDataException;
+import com.doubtsharing.exception.InvalidArgumentException;
+import com.doubtsharing.exception.RecordNotFoundException;
+import com.doubtsharing.models.Users;
+import com.doubtsharing.repository.UsersRepository;
+
+@Service
+public class UserServiceImplement implements UserService{
+
+	private UsersRepository userRepository;
+	
+	@Override
+	public Users registerUser(Users user) throws InvalidArgumentException, DuplicateDataException {
+		
+		if(user == null) {
+			throw new InvalidArgumentException("Invalid user details provided Or user can not be null");
+		}
+		
+		Optional<Users> userOpt = userRepository.findByEmail(user.getEmail());
+		
+		if(userOpt.isEmpty()) {
+			throw new DuplicateDataException("Already exit user with email "+user.getEmail());
+		}
+		
+		Users savedUser = userRepository.save(user);
+		
+		return savedUser;
+	}
+
+	@Override
+	public Users retriveSpcificUser(String email) throws InvalidArgumentException, RecordNotFoundException {
+		
+		if(email==null || email.isBlank() || email.isEmpty())
+			throw new InvalidArgumentException("Invalid email provided Or email should not null or blank or empty");
+		
+		Optional<Users> userOpt = userRepository.findByEmail(email);
+		if(userOpt.isEmpty()) {
+			throw new 
+		}
+		
+		return null;
+	}
+
+}

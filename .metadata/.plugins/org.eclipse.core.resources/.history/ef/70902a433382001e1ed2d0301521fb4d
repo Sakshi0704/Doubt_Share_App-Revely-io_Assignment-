@@ -1,0 +1,46 @@
+package com.doubtsharing.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.doubtsharing.exception.InvalidArgumentException;
+import com.doubtsharing.exception.RecordNotFoundException;
+import com.doubtsharing.models.TutorAvailability;
+import com.doubtsharing.repository.TutorAvailabilityRepository;
+
+@Service
+public class TutorAvailabilityServiceImpl implements TutorAvailabilityService {
+
+	@Autowired
+	private TutorAvailabilityRepository tutorAvailablityRepo;
+	
+	
+	@Override
+	public int countOnlineTutors() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<TutorAvailability> avaialbleTutor() throws RecordNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TutorAvailability addTutorAvailability(String email) throws InvalidArgumentException {
+		
+		   if
+		
+		return null;
+	}
+
+	@Override
+	public TutorAvailability updateTutorAvailability(String email) throws InvalidArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

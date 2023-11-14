@@ -1,0 +1,66 @@
+package com.doubtsharing.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.doubtsharing.exception.InvalidArgumentException;
+import com.doubtsharing.exception.RecordNotFoundException;
+import com.doubtsharing.models.Doubt;
+import com.doubtsharing.services.DoubtHandlingService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/doubt-sharing-app")
+public class DoubtHandlerController {
+
+	@Autowired
+	private DoubtHandlingService doubtHandlingService;
+	
+	@PostMapping("/student/add-doubt-request") // only by student 
+	public ResponseEntity<Doubt> addDoubtRequestHandler(@Valid @RequestBody Doubt doubt){
+	
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+       
+		String email = authentication.getName();
+		
+		Doubt addedDoubt = doubtHandlingService.addDoubtRequest(doubt, email);
+		
+		return new ResponseEntity<Doubt>(addedDoubt,HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/live")
+	public ResponseEntity<Doubt> tutorAvailableLiveToResolveDoubtHandler(@Valid @RequestBody Doubt doubtRequest){  // only by student
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		String email = authentication.getName();
+		
+		return new ResponseEntity<Doubt>(doubtRequest,HttpStatus.ACCEPTED);
+	}
+	
+	public ResponseEntity<Doubt> doubtResolveByTutor(Integer doubtId, String solvedDesc, String email) {  // by tutor only
+		
+	}
+	
+	public ResponseEntity<List<Doubt>> paddingDoubtsForSpecificTutorByRequestTimeDesc(String email) {  // by tutor only
+		
+	}
+	
+	public ResponseEntity<List<Doubt>> getDoubtRequestHistoryByEmailByRequestTimeDesc(String email){  // by student only
+		
+	}
+	
+}

@@ -1,0 +1,153 @@
+package com.doubtsharing.dto;
+
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CurrentTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.doubtsharing.enums.DoubtStatus;
+import com.doubtsharing.enums.Subject;
+import com.doubtsharing.models.Users;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
+public class DoubtDTO {
+	
+		
+	    private Integer doubtRequestId;    
+	    
+	    private Subject doubtSubject; // 1,2,3...
+	    
+	    private String doubtTitle;  // by student
+	    private String doubtDescription;    // by student
+	    
+	    private String studentName;  // when user is student 
+	    
+	    private String tutorName; // when user is tutor
+	    
+	    private LocalDateTime requestTime;
+	    
+	    private DoubtStatus doubtStatus = DoubtStatus.PANDDING; // resolved , padding , assigned
+	   
+	    private String doubtResolveDescription;  // by tutor
+	    
+	    private LocalDateTime reloveTime;  // after resolve the doubt by tutor
+
+	    
+	    
+		public DoubtDTO() {
+			super();
+		}
+
+		public DoubtDTO(Integer doubtRequestId, Subject doubtSubject, String doubtTitle, String doubtDescription,
+				Users student, Users tutor, LocalDateTime requestTime, DoubtStatus doubtStatus,
+				String doubtResolveDescription, LocalDateTime reloveTime) {
+			super();
+			this.doubtRequestId = doubtRequestId;
+			this.doubtSubject = doubtSubject;
+			this.doubtTitle = doubtTitle;
+			this.doubtDescription = doubtDescription;
+			if(student!=null)
+				this.studentName = student.getUserName();
+			if(tutor!=null)
+				this.tutorName = tutor.getUserName();
+			this.requestTime = requestTime;
+			this.doubtStatus = doubtStatus;
+			this.doubtResolveDescription = doubtResolveDescription;
+			this.reloveTime = reloveTime;
+		}
+
+		public Integer getDoubtRequestId() {
+			return doubtRequestId;
+		}
+
+		public void setDoubtRequestId(Integer doubtRequestId) {
+			this.doubtRequestId = doubtRequestId;
+		}
+
+		public Subject getDoubtSubject() {
+			return doubtSubject;
+		}
+
+		public void setDoubtSubject(Subject doubtSubject) {
+			this.doubtSubject = doubtSubject;
+		}
+
+		public String getDoubtTitle() {
+			return doubtTitle;
+		}
+
+		public void setDoubtTitle(String doubtTitle) {
+			this.doubtTitle = doubtTitle;
+		}
+
+		public String getDoubtDescription() {
+			return doubtDescription;
+		}
+
+		public void setDoubtDescription(String doubtDescription) {
+			this.doubtDescription = doubtDescription;
+		}
+
+		public String getStudentName() {
+			return studentName;
+		}
+
+		public void setStudentName(String studentName) {
+			this.studentName = studentName;
+		}
+
+		public String getTutorName() {
+			return tutorName;
+		}
+
+		public void setTutorName(String tutorName) {
+			this.tutorName = tutorName;
+		}
+
+		public LocalDateTime getRequestTime() {
+			return requestTime;
+		}
+
+		public void setRequestTime(LocalDateTime requestTime) {
+			this.requestTime = requestTime;
+		}
+
+		public DoubtStatus getDoubtStatus() {
+			return doubtStatus;
+		}
+
+		public void setDoubtStatus(DoubtStatus doubtStatus) {
+			this.doubtStatus = doubtStatus;
+		}
+
+		public String getDoubtResolveDescription() {
+			return doubtResolveDescription;
+		}
+
+		public void setDoubtResolveDescription(String doubtResolveDescription) {
+			this.doubtResolveDescription = doubtResolveDescription;
+		}
+
+		public LocalDateTime getReloveTime() {
+			return reloveTime;
+		}
+
+		public void setReloveTime(LocalDateTime reloveTime) {
+			this.reloveTime = reloveTime;
+		}
+	
+}

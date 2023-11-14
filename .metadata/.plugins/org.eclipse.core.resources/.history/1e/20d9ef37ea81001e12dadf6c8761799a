@@ -1,0 +1,22 @@
+package com.doubtsharing.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.doubtsharing.exception.InvalidArgumentException;
+import com.doubtsharing.exception.RecordNotFoundException;
+import com.doubtsharing.models.Doubt;
+
+public interface DoubtHandlingService {
+	
+	public List<Doubt> getDoubtRequestHistoryByEmail(String email) throws InvalidArgumentException,RecordNotFoundException;
+	
+	public Doubt addDoubtRequest(Doubt doubt,String email) throws InvalidArgumentException;   // by student
+	
+	public Doubt tutorAvailableLiveToResolveDoubt(Doubt doubtRequest, String email) throws InvalidArgumentException;
+	
+	public Doubt doubtResolveByTutor(Integer doubtId, String solvedDesc, String email) throws InvalidArgumentException;
+	
+	public List<Doubt> doubtToResolve(String email) throws RecordNotFoundException,InvalidArgumentException;
+	
+}

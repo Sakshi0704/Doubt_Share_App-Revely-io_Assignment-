@@ -1,0 +1,16 @@
+package com.doubtsharing.services;
+
+import java.util.List;
+
+import com.doubtsharing.exception.DuplicateDataException;
+import com.doubtsharing.exception.InvalidArgumentException;
+import com.doubtsharing.models.Users;
+
+public interface UserService {
+
+	public Users registerUser(Users user) throws InvalidArgumentException,DuplicateDataException;
+	
+	public Users retriveSpcificUser(String email) throws InvalidArgumentException,RecordNotFoundException;
+	
+//	public List<Users> retriveAllUsers() throws RecordNotFoundException;
+}

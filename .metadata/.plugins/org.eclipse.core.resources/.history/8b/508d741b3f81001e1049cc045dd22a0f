@@ -1,0 +1,13 @@
+package com.doubtsharing.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.doubtsharing.models.DoubtRequest;
+
+public interface DoubtRequestRepository extends JpaRepository<DoubtRequest, Integer> {
+	
+	List<DoubtRequest> findAllByStudentIdOrderByRequestTimeDesc(Integer studentId);
+	
+}

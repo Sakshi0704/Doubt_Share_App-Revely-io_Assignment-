@@ -1,0 +1,28 @@
+package com.doubtsharing.models;
+
+public enum Subject {
+	MATHS("Mathematics"),
+    SCIENCE("Science"),
+    ENGLISH("English"),
+    HINDI("Hindi"),
+    EVS("Environmental Studies"),
+    SOCIAL_STUDIES("Social Studies"),
+    COMPUTER_SCIENCE("Computer Science"),
+    PHYSICS("Physics"),
+    CHEMISTRY("Chemistry"),
+    BIOLOGY("Biology"),
+    HISTORY("History"),
+    GEOGRAPHY("Geography"),
+    CIVICS("Civics"),
+    ECONOMICS("Economics");
+	
+    private String subject;
+
+    private Subject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+}

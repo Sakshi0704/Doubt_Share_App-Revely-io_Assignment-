@@ -1,0 +1,5 @@
+package com.doubtsharing.configuration;
+
+public interface SecurityConstants {
+
+}

@@ -1,0 +1,13 @@
+package com.doubtsharing.exception;
+
+public class RecordNotFoundException extends RuntimeException{
+
+	public DataNotFoundException() {
+		
+	}
+	
+	public DataNotFoundException(String message) {
+		super(message);
+	}
+	
+}

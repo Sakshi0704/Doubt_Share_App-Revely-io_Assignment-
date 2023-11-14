@@ -1,0 +1,18 @@
+package com.doubtsharing.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.doubtsharing.models.TutorAvailability;
+
+public interface TutorAvailabilityRepository extends JpaRepository<TutorAvailability, Integer>{
+
+	public List<TutorAvailability> findByOnlineStatus(String onlineStatus);
+	
+	@Query("select t from TutorAvailability t Join Users u on t.Users.userId = u.userId having t.Users.email = :email")
+	public TutorAvailability findByUser(@Param("email") String email);
+	
+}

@@ -1,0 +1,32 @@
+package com.doubtsharing.services;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.doubtsharing.exception.InvalidArgumentException;
+import com.doubtsharing.exception.RecordNotFoundException;
+import com.doubtsharing.models.TutorAvailability;
+
+@Service
+public class TutorAvailabilityServiceImpl implements TutorAvailabilityService {
+
+	@Override
+	public int countOnlineTutors() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public TutorAvailability updateTutorAvailabilty(String email) throws InvalidArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TutorAvailability> avaialbleTutor() throws RecordNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

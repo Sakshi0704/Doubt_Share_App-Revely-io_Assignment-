@@ -1,0 +1,61 @@
+package com.doubtsharing.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.doubtsharing.enums.TutorAvailabilityStatus;
+import com.doubtsharing.exception.InvalidArgumentException;
+import com.doubtsharing.exception.RecordNotFoundException;
+import com.doubtsharing.models.TutorAvailability;
+import com.doubtsharing.repository.TutorAvailabilityRepository;
+import com.doubtsharing.repository.UsersRepository;
+
+@Service
+public class TutorAvailabilityServiceImpl implements TutorAvailabilityService {
+
+	@Autowired
+	private TutorAvailabilityRepository tutorAvailablityRepo;
+	
+	@Autowired
+	private UsersRepository userRepo;
+	
+	@Override
+	public int countOnlineTutors() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<TutorAvailability> avaialbleTutor() throws RecordNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TutorAvailability updateTutorAvailabilityAsAvailable(String email) throws InvalidArgumentException {
+		
+		if(email == null || email.isBlank() || email.isEmpty()) {
+			throw new InvalidArgumentException("Invalid argument is given");
+		}
+		
+		Optional<TutorAvailability> tutorAvailabilityOpt =  tutorAvailablityRepo.findTutorAvailabilityByEmail(email);
+		
+		TutorAvailability tutorAvailability = null;
+		
+		if(tutorAvailabilityOpt.isEmpty()) {
+			tutorAvailability = new TutorAvailability();
+			tutorAvailability.setUser(userRepo.findByEmail(email).get());
+			tutorAvailability.setOnlineStatus(TutorAvailabilityStatus.AVAILABLE);
+		}else {
+			tutorAvailability = tutorAvailabilityOpt.get();
+			if(tutorAvailability.getOnlineStatus().equals(TutorAvailabilityStatus.NOT_AVAILABLE)) {
+				tutorAvailability.setOnlineStatus(TutorAvailabilityStatus.AVAILABLE);
+			}
+		}
+		return tutorAvailablityRepo.save(tutorAvailability);
+	}
+
+}

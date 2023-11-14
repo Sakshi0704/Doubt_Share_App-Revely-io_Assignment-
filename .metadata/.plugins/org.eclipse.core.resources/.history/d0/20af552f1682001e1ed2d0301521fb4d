@@ -1,0 +1,21 @@
+package com.doubtsharing.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.doubtsharing.models.Users;
+import com.doubtsharing.services.UserService;
+
+@RestController("/doubt-sharing-app")
+public class UserController {
+
+	@Autowired
+	private UserService userService;
+	
+	
+	
+	
+}

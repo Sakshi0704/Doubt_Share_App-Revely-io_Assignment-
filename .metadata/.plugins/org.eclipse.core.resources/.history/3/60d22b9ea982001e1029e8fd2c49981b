@@ -1,0 +1,5 @@
+package com.doubtsharing.dto;
+
+public class DoubtDTO {
+
+}

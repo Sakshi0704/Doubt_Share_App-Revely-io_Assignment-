@@ -1,0 +1,35 @@
+package com.doubtsharing.repository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.doubtsharing.models.TutorAvailability;
+
+public interface TutorAvailabilityRepository extends JpaRepository<TutorAvailability, Integer>{
+	
+	@Query("SELECT t FROM TutorAvailability t where t.onlineStatus = :onlineStatus")
+	public List<TutorAvailability> findByOnlineStatus(@Param("onlineStatus")String onlineStatus);
+	
+	@Query("SELECT t FROM TutorAvailability t JOIN t.user u WHERE u.email = :email")
+	public Optional<TutorAvailability> findTutorAvailabilityByEmail(@Param("email") String email);
+	
+	@Query("SELECT count(t) from TutorAvailability t WHERE t.lastPingTime BETWEEN :startingTime AND :endingTime")
+	public int countAvailableTutorsByLastPingTimeUnderThreeSecondFromNow(@Param("startingTime") LocalDateTime startingTime
+			                                                          ,@Param("endingTime") LocalDateTime endingTime);
+	
+//	@Modifying
+//	@Query("UPDATE TutorAvailability t SET t.lastPingTime = :lastPingTime WHERE t.onlineStatus = :onlineStatus")
+//	public void updateLastPingTimeOfOnlineAvaiableTutor(@Param("onlineStatus") String onlineStatus , 
+//																@Param("newTime") LocalDateTime lastPingTime);
+	
+	@Query("SELECT t from TutorAvailability t JOIN t.user u where t.onlineStatus = :onlineStatus AND u.subject = :subject AND u.userLanguage = :userLanguage")
+	public List<TutorAvailability> findTutorsByOnlineStatusBySubject(@Param("onlineStatus") String onlineStatus, 
+																		@Param("subject") String subject , 
+																		@Param("userLanguage") String userLanguage);
+}

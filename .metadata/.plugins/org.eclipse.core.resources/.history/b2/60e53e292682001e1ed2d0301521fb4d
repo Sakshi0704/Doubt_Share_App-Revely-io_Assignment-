@@ -1,0 +1,60 @@
+package com.doubtsharing.models;
+
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CurrentTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.doubtsharing.enums.DoubtStatus;
+import com.doubtsharing.enums.Subject;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+public class Doubt {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer doubtRequestId;    
+    
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Subject doubtSubject; // 1,2,3...
+    
+    @NotNull
+    @NotEmpty
+    @NotBlank
+    private String doubtTitle;  // by student
+    
+    @NotNull
+    @NotEmpty
+    @NotBlank
+    private String doubtDescription;    // by student
+    
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Users student;
+    
+    @CurrentTimestamp
+    private LocalDateTime requestTime;
+    
+    @Enumerated(EnumType.STRING)
+    private DoubtStatus doubtStatus = DoubtStatus.PANDDING; // resolved , padding
+   
+    
+    private String doubtResolveDescription;  // by tutor
+    
+    //@UpdateTimestamp
+    private LocalDateTime reloveTime;  // after resolve the doubt by tutor
+	
+}

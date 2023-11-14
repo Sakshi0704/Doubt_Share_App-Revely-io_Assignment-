@@ -1,0 +1,64 @@
+package com.doubtsharing.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.doubtsharing.models.Users;
+import com.doubtsharing.services.UserService;
+
+@RestController
+@RequestMapping("/doubt-sharing-app/auth")
+public class UsersAuthenticationController {
+
+	@Autowired
+	private UserService userService;
+
+	
+	@PostMapping("/register-student") 
+	           // http://localhost:8085/doubt-sharing-app/auth/register-student
+	public ResponseEntity<Users> registerUserAsStudent(@RequestBody Users user) {
+
+		user.setUserType("Student");
+		
+		Users registerUser = userService.registerUser(user);
+		
+		return new ResponseEntity<>(registerUser,HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/register-teacher")
+			// http://localhost:8085/doubt-sharing-app/auth/register-teacher
+	public ResponseEntity<Users> registerUserAsTutor(@RequestBody Users user) {
+
+		user.setUserType("Tutor");
+		
+		Users registerUser = userService.registerUser(user);
+		
+		return new ResponseEntity<>(registerUser,HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/student/signIn")
+				// http://localhost:8085/doubt-sharing-app/auth/student/signIn
+	public ResponseEntity<Users> logInSpcificStudentHandler(Authentication auth){
+		
+			Users student = userService.retriveSpcificUser(auth.getUsername());
+			
+			return new ResponseEntity<>(student,HttpStatus.OK);
+	}
+
+	
+	@GetMapping("/tutor/signIn")
+	public ResponseEntity<Users> logInSpcificTutorHandler(Authentication auth){
+		   
+			Users tutor = userService.retriveSpcificUser(auth.getUsername());
+			
+			return new ResponseEntity<>(tutor,HttpStatus.OK);
+	}
+}

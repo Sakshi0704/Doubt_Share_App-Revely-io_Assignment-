@@ -1,0 +1,21 @@
+package com.doubtsharing.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.doubtsharing.models.Doubt;
+
+public interface DoubtRepository extends JpaRepository<Doubt, Integer> {
+	
+	@Query("SELECT d FROM Doubt d JOIN d.tutor u WHERE u.email = :email AND d.doubtStatus = :doubtStatus ORDER BY d.requestTime DESC")
+	public List<Doubt> findDoubtsByDoubtStatusByTutorByRequestTimeDesc(@Param("email") String email ,
+										@Param("doubtStatus") String doubtStatus); // by tutor..
+	
+	@Query("SELECT d FROM Doubt d JOIN d.tutor u WHERE u.email = :email AND d.doubtStatus = :doubtStatus ORDER BY d.requestTime DESC")
+	public List<Doubt> findDoubtsByDoubtsStatusByStudentByRequestTimeDesc(@Param("email") String email ,
+										@Param("doubtStatus") String doubtStatus); // by student..
+	
+}

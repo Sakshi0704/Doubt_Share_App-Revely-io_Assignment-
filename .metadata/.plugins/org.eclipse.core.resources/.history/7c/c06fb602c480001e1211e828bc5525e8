@@ -1,0 +1,8 @@
+package com.doubtsharing.models;
+
+public enum Subject {
+
+	"MATHS","SCIENCE","ENGLISH","HINDI","EVS"
+	
+	
+}

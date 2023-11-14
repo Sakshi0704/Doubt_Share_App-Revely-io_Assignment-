@@ -1,0 +1,5 @@
+package com.doubtsharing.exception;
+
+public class Duplicatexception extends RuntimeException{
+
+}

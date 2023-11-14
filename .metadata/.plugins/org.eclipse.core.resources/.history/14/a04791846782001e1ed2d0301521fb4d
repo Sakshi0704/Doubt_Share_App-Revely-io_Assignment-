@@ -1,0 +1,170 @@
+package com.doubtsharing.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Service;
+
+import com.doubtsharing.exception.InvalidArgumentException;
+import com.doubtsharing.exception.RecordNotFoundException;
+import com.doubtsharing.models.Doubt;
+import com.doubtsharing.models.TutorAvailability;
+import com.doubtsharing.enums.DoubtStatus;
+import com.doubtsharing.enums.TutorAvailabilityStatus;
+import com.doubtsharing.enums.UsersGrade;
+import com.doubtsharing.models.Users;
+import com.doubtsharing.repository.DoubtRepository;
+import com.doubtsharing.repository.TutorAvailabilityRepository;
+import com.doubtsharing.repository.UsersRepository;
+
+
+@Service
+public class DoubtHandlingServiceImpl implements DoubtHandlingService {
+
+	@Autowired
+	private DoubtRepository doubtRepository;
+	
+	@Autowired
+	private UsersRepository usersRepository;
+	
+	@Autowired
+	private TutorAvailabilityRepository tutorAvailableRepository;
+	
+	@Override
+	public List<Doubt> getDoubtRequestHistoryByEmail(String email) throws InvalidArgumentException,RecordNotFoundException {
+		
+		if(email == null ||email.isBlank() || email.isEmpty()) {
+			throw new InvalidArgumentException("Student email "+ email + " is invalid");
+		}
+		
+		Optional<Users> user = usersRepository.findByEmail(email);
+		
+		if(user.isEmpty()) {
+			throw new RecordNotFoundException("No Student found with email "+ email);
+		}
+		
+//        List<Doubt> doubtsHistory = doubtRepository.findAllByEmailOrderByRequestTimeDesc(email);
+//        
+//        if(doubtsHistory.isEmpty()) {
+//        	throw new RecordNotFoundException("No Student doubt history found in record");
+//        }
+//        
+//        return doubtsHistory;
+		return null;
+	}
+
+	@Override
+	public Doubt addDoubtRequest(Doubt doubtRequest , String email) throws InvalidArgumentException,RecordNotFoundException{
+		
+		if(email == null ||email.isBlank() || email.isEmpty()) {
+			throw new InvalidArgumentException("Student email "+ email + " is invalid");
+		}
+		
+		if(doubtRequest == null) {
+			throw new InvalidArgumentException("doubt request is invalid");
+		}
+		Optional<Users> user = usersRepository.findByEmail(email);
+		
+		if(user.isEmpty()) {
+			throw new RecordNotFoundException("No Student found with email "+ email);
+		}
+		
+		doubtRequest.setStudent(user.get());		
+		
+		return doubtRepository.save(doubtRequest);
+	}
+
+	
+	@Override
+	public Doubt tutorAvailableLiveToResolveDoubt(Doubt doubtRequest, String email) throws InvalidArgumentException {
+	    if (doubtRequest == null) {
+	        throw new InvalidArgumentException("Invalid doubt request.");
+	    }
+
+	    if (!doubtRequest.getDoubtStatus().equals(DoubtStatus.PANDDING)) {
+	        throw new InvalidArgumentException("Doubt request is not in the PENDING status.");
+	    }
+
+	    Users student = doubtRequest.getStudent();
+
+	    if (student == null || !student.getEmail().equals(email)) {
+	        throw new InvalidArgumentException("Invalid user who give this doubt to resolve...");
+	    }
+          
+	    List<TutorAvailability> availableTutors =  tutorAvailableRepository.findTutorsByOnlineStatusBySubject(
+	    																			TutorAvailabilityStatus.AVAILABLE.toString(), 
+	    																			doubtRequest.getDoubtSubject().toString(), 
+	    																			student.getUserLanguage().toString());
+	    // Iterate through available tutors to find a suitable match......
+	    for (TutorAvailability tutorAvailability : availableTutors) {
+	    		
+	    		Users tutor = tutorAvailability.getUser();
+	        
+	            // Check if the student's class/grade falls within the range the tutor teaches.
+	            if (isStudentGradeInRange(student.getClass_grade().toString(),tutor.getMin_grade().toString(), tutor.getMax_grade().toString())) {
+	               
+	                    // Assign the tutor to the doubt request.
+	                    doubtRequest.setTutor(tutor);
+	                    doubtRequest.setDoubtStatus(DoubtStatus.ASSIGNED);
+
+	                    // Save the updated doubt using your DoubtRepository.
+	                    Doubt updatedDoubt = doubtRepository.save(doubtRequest);
+
+	                    return updatedDoubt;
+	            		}
+	        		}
+	    			throw new InvalidArgumentException("No available tutors match the criteria to resolve this doubt.");
+	    }
+	
+	
+	private boolean isStudentGradeInRange(String studentGrade, String min_grade , String max_grade) {
+		 
+		if(Integer.parseInt(studentGrade) >= Integer.parseInt(min_grade) 
+					&& Integer.parseInt(studentGrade)<= Integer.parseInt(max_grade)){
+			return true;
+		}
+		
+	    return false;  // Student's grade is not within the tutor's range
+	}
+	
+	
+	@Override
+	public Doubt doubtResolveByTutor(Integer doubtId, String solvedDesc, String email) throws InvalidArgumentException,RecordNotFoundException {
+		
+		if(doubtId<=0 || solvedDesc == null || solvedDesc.isEmpty() || solvedDesc.isBlank()) {
+			throw new InvalidArgumentException("Invalid arguments are provided !!");
+		}
+		
+		Optional<Users> tutorOpt = usersRepository.findByEmail(email);
+		if(tutorOpt.isEmpty()) {
+			throw new RecordNotFoundException("No Tutor found by email "+ email);
+		}
+		
+		Optional<Doubt> doubtOpt = doubtRepository.findById(doubtId);
+		if(doubtOpt.isEmpty()) {
+			throw new RecordNotFoundException("No such doubt found with doubtId "+ doubtId);
+		}
+		
+		Doubt doubt = doubtOpt.get();
+		if(doubt.equals(DoubtStatus.RESOLVED)) {
+			throw new RecordNotFoundException("Doubt is solved already by tutor "+doubt.getTutor().getUserName());
+		}
+		doubt.setTutor(tutorOpt.get());
+		doubt.setDoubtResolveDescription("Tutor Solution Description: "+solvedDesc);
+
+		return doubtRepository.save(doubt);
+	}
+
+	
+	@Override
+	public List<Doubt> paddingDoubts(String email) throws RecordNotFoundException, InvalidArgumentException {
+		// TODO Auto-generated method stub
+		
+		
+		
+		return null;
+	}
+
+}

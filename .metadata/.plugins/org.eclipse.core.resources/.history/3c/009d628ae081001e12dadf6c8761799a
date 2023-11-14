@@ -1,0 +1,27 @@
+package com.doubtsharing.models;
+
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+
+@Entity
+public class TutorAvailability {
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer tutorAvailabilityId;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private Users user;
+
+    private LocalDateTime lastPingTime;
+
+    private boolean onlineStatus = false;
+   
+}

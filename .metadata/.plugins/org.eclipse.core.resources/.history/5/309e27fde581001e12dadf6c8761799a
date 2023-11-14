@@ -1,0 +1,43 @@
+package com.doubtsharing.models;
+
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
+public class Doubt {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer doubtRequestId;    
+
+    @Enumerated(EnumType.STRING)
+    private Subject doubtSubject;
+    
+    private String doubtTitle;
+    
+    private String doubtDescription;
+    
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Users student;
+    
+    private LocalDateTime requestTime;
+    
+    
+    private String doubtStatus; // resolved , padding
+   
+    
+    private String doubtResolveDescription;  // by tutor
+    
+    
+    private LocalDateTime reloveTime;
+	
+}

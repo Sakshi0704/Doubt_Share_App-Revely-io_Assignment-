@@ -1,0 +1,19 @@
+package com.doubtsharing.models;
+
+public enum UsersType {
+
+	STUDENT("Student"),
+	TUTOR("Tutor");
+
+    private String usersType;
+
+    UsersType(String usersType) {
+        this.usersType = usersType;
+    }
+
+    public String getUsersType() {
+        return usersType;
+    }
+	
+	
+}

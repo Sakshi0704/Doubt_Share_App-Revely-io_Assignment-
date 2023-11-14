@@ -1,0 +1,17 @@
+package com.doubtsharing.services;
+
+import java.util.List;
+
+import com.doubtsharing.exception.DataNotFoundException;
+import com.doubtsharing.exception.DuplicateDataException;
+import com.doubtsharing.exception.InvalidArgumentException;
+import com.doubtsharing.models.Users;
+
+public interface UserService {
+
+	public Users registerUser(String email) throws InvalidArgumentException,DuplicateDataException;
+	
+	public Users retriveSpcificUser(String email) throws InvalidArgumentException,DataNotFoundException;
+	
+//	public List<Users> retriveAllUsers() throws DataNotFoundException;
+}

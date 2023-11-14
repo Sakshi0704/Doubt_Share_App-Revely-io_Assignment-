@@ -1,0 +1,5 @@
+package com.doubtsharing.models;
+
+public enum UserType {
+	TUTOR,STUDENT;
+}

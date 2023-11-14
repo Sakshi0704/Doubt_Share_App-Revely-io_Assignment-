@@ -1,0 +1,35 @@
+package com.doubtsharing.services;
+
+import org.springframework.stereotype.Service;
+
+import com.doubtsharing.exception.DataNotFoundException;
+import com.doubtsharing.exception.DuplicateDataException;
+import com.doubtsharing.exception.InvalidArgumentException;
+import com.doubtsharing.models.Users;
+import com.doubtsharing.repository.UsersRepository;
+
+@Service
+public class UserServiceImplement implements UserService{
+
+	private UsersRepository userRepository;
+	
+	@Override
+	public Users registerUser(Users user) throws InvalidArgumentException, DuplicateDataException {
+		
+		if(email == null || email.isEmpty() || email.isBlank()) {
+			throw new InvalidArgumentException("Invalid(null,empty,blank) email found");
+		}
+		
+		
+		
+		
+		return null;
+	}
+
+	@Override
+	public Users retriveSpcificUser(String email) throws InvalidArgumentException, DataNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

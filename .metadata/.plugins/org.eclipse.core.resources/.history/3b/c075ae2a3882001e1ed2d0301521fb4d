@@ -1,0 +1,17 @@
+package com.doubtsharing.services;
+
+import java.util.List;
+
+import com.doubtsharing.exception.InvalidArgumentException;
+import com.doubtsharing.exception.RecordNotFoundException;
+import com.doubtsharing.models.TutorAvailability;
+
+public interface TutorAvailabilityService {
+
+	public int countOnlineTutors();
+	
+	public TutorAvailability addTutorAvailability(String email) throws InvalidArgumentException;
+	
+	public List<TutorAvailability> avaialbleTutor() throws RecordNotFoundException;
+	
+}
