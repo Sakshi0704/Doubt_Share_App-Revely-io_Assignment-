@@ -72,7 +72,11 @@ public class UsersAuthenticationController {
 
 		System.out.println("inside the register tutor handler");
 		
+		System.out.println(tutorDTO.getMax_grade());
+		
 		Users user = new Users(tutorDTO);
+		
+		System.out.println(user.getMax_grade());
 		
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		

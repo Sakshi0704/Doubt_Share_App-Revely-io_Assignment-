@@ -7,8 +7,8 @@ const TutorSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userLanguage, setUserLanguage] = useState("");
-  const [minGrade, setMinGrade] = useState("");
-  const [maxGrade, setMaxGrade] = useState("");
+  const [min_grade, setMinGrade] = useState("");
+  const [max_grade, setMaxGrade] = useState("");
   const [subjectExpertise, setSubjectExpertise] = useState("");
 
   const handleUserNameChange = (e) => {
@@ -28,11 +28,15 @@ const TutorSignup = () => {
   };
 
   const handleMinGradeChange = (e) => {
-    setMinGrade(e.target.value);
+    let min = e.target.value
+    console.log(min);
+    setMinGrade(min);
   };
 
   const handleMaxGradeChange = (e) => {
-    setMaxGrade(e.target.value);
+    let max = e.target.value
+    console.log(max);
+    setMaxGrade(max);
   };
 
   const handleSubjectExpertiseChange = (e) => {
@@ -46,8 +50,8 @@ const TutorSignup = () => {
       email,
       password,
       userLanguage,
-      minGrade,
-      maxGrade,
+      min_grade: min_grade.toUpperCase(),
+      max_grade: max_grade.toUpperCase(),
       subjectExpertise,
     };
     console.log("Tutor Signup Data:", tutorData);
@@ -63,11 +67,14 @@ const TutorSignup = () => {
       })
       .then((data) => {
         console.log(data);
+        window.alert("Signup successful!"); 
+        window.location.href = "/login"; 
       })
       .catch((error) => {
         console.log("Error:", error);
       });
   };
+
 
   return (
     <div>
@@ -117,7 +124,7 @@ const TutorSignup = () => {
           Minimum Grade:
           <input
             type="text"
-            value={minGrade.toUpperCase()}
+            value={min_grade.toUpperCase()}
             onChange={handleMinGradeChange}
             required
           />
@@ -127,7 +134,7 @@ const TutorSignup = () => {
           Maximum Grade:
           <input
             type="text"
-            value={maxGrade.toUpperCase()}
+            value={max_grade.toUpperCase()}
             onChange={handleMaxGradeChange}
             required
           />

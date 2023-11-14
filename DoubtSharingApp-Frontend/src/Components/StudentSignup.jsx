@@ -50,6 +50,8 @@ const StudentSignup = () => {
       })
       .then((data) => {
         console.log(data);
+        window.alert("Signup successful!");
+        window.location.href = "/login"; 
       })
       .catch((error) => {
         console.log("Error:", error);

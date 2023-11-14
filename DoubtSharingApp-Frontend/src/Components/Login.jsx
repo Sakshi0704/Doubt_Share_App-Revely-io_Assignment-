@@ -5,7 +5,6 @@ import "../CSS/Login.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState("");
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -14,7 +13,6 @@ const Login = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,34 +24,34 @@ const Login = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Basic ${basicAuth}`, // Include Basic Auth header
-      }
+        "Authorization": `Basic ${basicAuth}`,
+      },
     })
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const oldToken = response.headers.get("Authorization");
+        const newToken = response.headers.get("Authorization");
 
-        // console.log("Token:", oldToken);
-
-
-        setToken(oldToken)
-        // console.log("newToken:", token);
-
+        // Save the token to local storage
+        localStorage.setItem("token", newToken);
 
         return response.json();
       })
       .then((data) => {
         console.log(data);
         // Handle the response data as needed
+
+        window.alert("Login successful!");
+
+        // Navigate to the student_data page
+        window.location.href = "/student_data";
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
-
 
   return (
     <div className="login-container">
@@ -61,27 +59,16 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
         <label>
           Email:
-          <input
-            type="email"
-            value={email}
-            onChange={handleEmailChange}
-            required
-          />
+          <input type="email" value={email} onChange={handleEmailChange} required />
         </label>
         <br />
         <label>
           Password:
-          <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            required
-          />
+          <input type="password" value={password} onChange={handlePasswordChange} required />
         </label>
         <br />
         <button type="submit">Login</button>
       </form>
-      {/* <br /> */}
       <Link to="/signup">Sign Up</Link>
     </div>
   );
