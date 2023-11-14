@@ -57,6 +57,7 @@ public class UsersAuthenticationController {
 	// http://localhost:8085/doubt-sharing-app/auth/register-student
 	public ResponseEntity<Users> registerUserAsStudent(@Valid @RequestBody StudentDTO studentDTO) {
 		
+		
 		Users user = new Users(studentDTO);
 		
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -85,13 +86,13 @@ public class UsersAuthenticationController {
 	// http://localhost:8085/doubt-sharing-app/auth/user/signIn
 	public ResponseEntity<Users> logInUserHandler(Authentication auth) {
 
-		System.out.println(auth.getName()+"...................................");
+		//System.out.println(auth.getName()+"...................................");
 		Users user = userService.retriveSpecificUser(auth.getName());
 
 		if (user.getUserType().equals(UserType.ROLE_TUTOR)) {
 			tutorAvailabilityService.updateTutorAvailabilityAsAvailable(user.getEmail());
 		}
-		System.out.println("Sakshi ---- inside the signIn");
+		//System.out.println("Sakshi ---- inside the signIn");
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 

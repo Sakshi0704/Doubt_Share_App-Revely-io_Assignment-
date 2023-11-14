@@ -1,0 +1,31 @@
+package com.doubtsharing.enums;
+
+public enum UsersGrade {
+
+	1,2,3,4,5,6,7,8,9,10,11,12;
+//    GRADE_1(1),
+//    GRADE_2(2),
+//    GRADE_3(3),
+//    GRADE_4(4),
+//    GRADE_5(5),
+//    GRADE_6(6),
+//    GRADE_7(7),
+//    GRADE_8(8),
+//    GRADE_9(9),
+//    GRADE_10(10),
+//    GRADE_11(11),
+//    GRADE_12(12);
+//	
+//	
+//    private Integer grade;
+//
+//    UsersGrade(Integer grade) {
+//        this.grade = grade;
+//    }
+//
+//    public Integer getGrade() {
+//        return grade;
+//    }
+
+	
+}

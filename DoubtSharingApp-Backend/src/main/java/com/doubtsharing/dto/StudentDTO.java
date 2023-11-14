@@ -41,12 +41,12 @@ public class StudentDTO {
 	private UserType userType = UserType.ROLE_STUDENT; // student
 
 	
-	@NotNull(message = "User Language must not null")
+	//@NotNull(message = "User Language must not null")
 	@Enumerated(EnumType.STRING)
 	private Language userLanguage; // student and tutor language
 
 	
-	@NotNull(message = "Grade must not null")
+	//@NotNull(message = "Grade must not null")
 	@Enumerated(EnumType.STRING)
 	private UsersGrade class_grade;  // in which student currently
 
