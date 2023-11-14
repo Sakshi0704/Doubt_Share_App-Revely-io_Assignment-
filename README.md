@@ -10,6 +10,7 @@ The Doubt Sharing Application is designed to facilitate communication between st
 - Spring Framework
 - Spring Data JPA
 - Spring Security
+- JSON Web Token (JWT)
 - MySQL
 - Hibernate
 - Java
@@ -17,7 +18,7 @@ The Doubt Sharing Application is designed to facilitate communication between st
 - React (Frontend)
 - HTML, CSS
 - React Router DOM
-- JSON Web Token (JWT)
+
 
 ## Modules
 
@@ -33,7 +34,6 @@ The Doubt Sharing Application is designed to facilitate communication between st
 3. Create a database with the name "DoubtHandlingDB" in MySQL.
 4. Run the application.
 
-```properties
 # Example Database Configuration
 server.port=8085
 
@@ -73,7 +73,6 @@ The application uses JSON Web Token (JWT) for authentication and authorization. 
 
 ### Student Registration
 
-```json
 {
   "userName": "Sakshi",
   "email": "sakshi0704@gmail.com",
