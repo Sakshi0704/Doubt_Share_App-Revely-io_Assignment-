@@ -46,12 +46,12 @@ public class Doubt {
     @NotBlank
     private String doubtDescription;    // by student
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id")
     @JsonIgnore
     private Users student;  // when user is student 
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "tutor_id")
     @JsonIgnore
     private Users tutor; // when user is tutor

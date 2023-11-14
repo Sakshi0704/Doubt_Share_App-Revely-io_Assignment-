@@ -107,7 +107,7 @@ public class DoubtHandlingServiceImpl implements DoubtHandlingService {
 	}
 	
 	@Override
-	public List<Doubt> paddingDoubtsForSpecificTutorByRequestTimeDesc(String email) throws RecordNotFoundException, InvalidArgumentException { // by tutor
+	public List<Doubt> panddingDoubtsForSpecificTutorByRequestTimeDesc(String email) throws RecordNotFoundException, InvalidArgumentException { // by tutor
 		// TODO Auto-generated method stub
 		
 		if(email == null || email.isBlank() || email.isEmpty())

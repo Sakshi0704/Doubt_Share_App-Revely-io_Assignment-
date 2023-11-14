@@ -10,7 +10,7 @@ public interface TutorAvailabilityService {
 
 	public int countOnlineTutors()throws RecordNotFoundException;
 	
-	public List<TutorAvailability> avaialbleTutors() throws RecordNotFoundException;
+	public List<TutorAvailability> allavailableTutors() throws RecordNotFoundException;
 	
 	public TutorAvailability updateTutorAvailabilityAsAvailable(String email) throws InvalidArgumentException;
 	

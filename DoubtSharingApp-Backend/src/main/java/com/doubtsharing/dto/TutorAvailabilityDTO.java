@@ -1,44 +1,43 @@
-package com.doubtsharing.models;
+package com.doubtsharing.dto;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.CurrentTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.doubtsharing.enums.TutorAvailabilityStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.doubtsharing.models.Users;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
-@Entity
-public class TutorAvailability {
+public class TutorAvailabilityDTO {
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tutorAvailabilityId;
 	
-	@JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL ,fetch = FetchType.EAGER)
-    @JoinColumn(name = "tutor_id")
-    private Users user;
+    private String tutorName;
     
-    @JsonProperty(access = Access.READ_ONLY)
-    @UpdateTimestamp
     private LocalDateTime lastPingTime;
 
-    @Enumerated(EnumType.STRING)
     private TutorAvailabilityStatus onlineStatus;
+    
+	public TutorAvailabilityDTO() {
+		super();
+	}
+
+	public TutorAvailabilityDTO(Integer tutorAvailabilityId, Users tutor, LocalDateTime lastPingTime,
+			TutorAvailabilityStatus onlineStatus) {
+		super();
+		this.tutorAvailabilityId = tutorAvailabilityId;
+		if(tutor != null)
+		this.tutorName = tutor.getUserName();
+		this.lastPingTime = lastPingTime;
+		this.onlineStatus = onlineStatus;
+	}
 
 	public Integer getTutorAvailabilityId() {
 		return tutorAvailabilityId;
@@ -48,12 +47,12 @@ public class TutorAvailability {
 		this.tutorAvailabilityId = tutorAvailabilityId;
 	}
 
-	public Users getUser() {
-		return user;
+	public String getTutorName() {
+		return tutorName;
 	}
 
-	public void setUser(Users user) {
-		this.user = user;
+	public void setTutorName(String tutorName) {
+		this.tutorName = tutorName;
 	}
 
 	public LocalDateTime getLastPingTime() {
@@ -71,5 +70,6 @@ public class TutorAvailability {
 	public void setOnlineStatus(TutorAvailabilityStatus onlineStatus) {
 		this.onlineStatus = onlineStatus;
 	}
-    
+   
+	
 }

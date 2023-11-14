@@ -28,9 +28,13 @@ public class SecurityConfiguration {
 												"/doubt-sharing-app/auth/users"
 						};
 	
+	
 	//http://localhost:8085/doubt-sharing-app/student/add-doubt-request
+	//http://localhost:8085/doubt-sharing-app/student/assigne-doubt-to-live-tutor
+	//http://localhost:8085/doubt-sharing-app/student/all-doubts/history
 	public static final String STUDENT_URLS[] = { "/doubt-sharing-app/student/add-doubt-request",
-							
+							"/doubt-sharing-app/student/assigne-doubt-to-live-tutor",
+							"/doubt-sharing-app/student/all-doubts/history"
 						};
 
 	//http://localhost:8085/doubt-sharing-app/auth/user/signOut
@@ -42,10 +46,13 @@ public class SecurityConfiguration {
 	};
 	
 	
+
+	//http://localhost:8085/doubt-sharing-app/tutor/doubt-solve/{doubtId}
+	//http://localhost:8085/doubt-sharing-app/tutor/panding-doubts/{doubtId}
 	public static final String TUTOR_URLS[] = {
-											
+					"/doubt-sharing-app/tutor/panding-doubts/{doubtId}",
+					"/doubt-sharing-app/tutor/panding-doubts/{doubtId}"
 				};
-	
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -77,7 +84,7 @@ public class SecurityConfiguration {
 		.csrf(csrf -> csrf.disable())
 		.addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
 		.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class);
-//		.formLogin(Customizer.withDefaults())
+		//.formLogin(Customizer.withDefaults())
 //		.httpBasic(Customizer.withDefaults());
 		
 		return http.build();	

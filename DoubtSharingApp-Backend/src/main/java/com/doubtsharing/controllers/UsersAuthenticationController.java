@@ -18,11 +18,15 @@ import com.doubtsharing.dto.StudentDTO;
 import com.doubtsharing.dto.TutorDTO;
 import com.doubtsharing.enums.Subject;
 import com.doubtsharing.enums.UserType;
+import com.doubtsharing.enums.UsersGrade;
 import com.doubtsharing.models.Users;
 import com.doubtsharing.services.TutorAvailabilityService;
 import com.doubtsharing.services.UserService;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/doubt-sharing-app/auth")
@@ -39,9 +43,14 @@ public class UsersAuthenticationController {
 
 	/*
 	 * { "userName" : "Sakshi", "email" : "sakshi0704@gmail.com", "password" :
-	 * "12345", "userLanguage" : "HINDI", "class_grade" : "GRADE_1" }
-	 * 
-	 * 
+	 * "12345", "userLanguage" : "HINDI", "class_grade" : "1" }
+	 *
+	 */
+	
+	/*
+	 * { "userName" : "Sakshi", "email" : "sakshi0704@gmail.com", "password" :
+	 * "12345", "userLanguage" : "HINDI", "min_grade" : "1" , "max_grade" : "10", "subjectExpertise"="English"}
+	 *
 	 */
 
 	@PostMapping("/register-student")

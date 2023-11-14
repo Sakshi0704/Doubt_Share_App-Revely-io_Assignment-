@@ -16,10 +16,10 @@ public interface DoubtHandlingService {
 			throws InvalidArgumentException;  // by student only
 	
 	public Doubt doubtResolveByTutor(Integer doubtId, String solvedDesc, String email) 
-				throws InvalidArgumentException;
+				throws InvalidArgumentException;   // by tutor only
 	
-	public List<Doubt> paddingDoubtsForSpecificTutorByRequestTimeDesc(String email) 
-				throws RecordNotFoundException,InvalidArgumentException;
+	public List<Doubt> panddingDoubtsForSpecificTutorByRequestTimeDesc(String email) 
+				throws RecordNotFoundException,InvalidArgumentException;   // by tutor only
 	
 	public List<Doubt> getDoubtRequestHistoryByEmailByRequestTimeDesc(String email) 
 			throws InvalidArgumentException,RecordNotFoundException;  // by student only

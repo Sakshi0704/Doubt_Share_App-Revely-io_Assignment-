@@ -54,7 +54,7 @@ public class TutorAvailabilityServiceImpl implements TutorAvailabilityService {
     }
 
 	@Override
-	public List<TutorAvailability> avaialbleTutors() throws RecordNotFoundException {
+	public List<TutorAvailability> allavailableTutors() throws RecordNotFoundException {
 		List<TutorAvailability> onlineAvailableTutors = tutorAvailablityRepo
 										.findByOnlineStatus(TutorAvailabilityStatus.AVAILABLE.toString());
         if (onlineAvailableTutors.isEmpty()) {
