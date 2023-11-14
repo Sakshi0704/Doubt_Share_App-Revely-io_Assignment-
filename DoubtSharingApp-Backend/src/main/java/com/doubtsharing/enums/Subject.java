@@ -1,28 +1,18 @@
 package com.doubtsharing.enums;
 
 public enum Subject {
-	MATHS("Mathematics"),
-    SCIENCE("Science"),
-    ENGLISH("English"),
-    HINDI("Hindi"),
-    EVS("Environmental Studies"),
-    SOCIAL_STUDIES("Social Studies"),
-    COMPUTER_SCIENCE("Computer Science"),
-    PHYSICS("Physics"),
-    CHEMISTRY("Chemistry"),
-    BIOLOGY("Biology"),
-    HISTORY("History"),
-    GEOGRAPHY("Geography"),
-    CIVICS("Civics"),
-    ECONOMICS("Economics");
-	
-    private String subject;
-
-    private Subject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
+	MATHS,
+    SCIENCE,
+    ENGLISH,
+    HINDI,
+    EVS,
+    SOCIAL_STUDIES,
+    COMPUTER_SCIENCE,
+    PHYSICS,
+    CHEMISTRY,
+    BIOLOGY,
+    HISTORY,
+    GEOGRAPHY,
+    CIVICS,
+    ECONOMICS;
 }

@@ -41,9 +41,8 @@ public class UsersAuthenticationController {
 	private PasswordEncoder passwordEncoder;
 
 	/*
-	 * { "userName" : "Sakshi", "email" : "sakshi0704@gmail.com", "password" :
-	 * "12345", "userLanguage" : "HINDI", "class_grade" : "1" }
-	 *
+	  { "userName" : "Sakshi", "email" : "sakshi0704@gmail.com", "password" :
+	  "12345", "userLanguage" : "HINDI", "class_grade" : "1" }
 	 */
 	
 	/*

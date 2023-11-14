@@ -41,7 +41,6 @@ public class SecurityConfiguration {
 
 	//http://localhost:8085/doubt-sharing-app/auth/user/signOut
 	public static final String STUDENT_TUTOR_URLS[] = {
-			"/doubt-sharing-app/auth/users",
 			"/doubt-sharing-app/auth/user/signOut",
 	};
 	

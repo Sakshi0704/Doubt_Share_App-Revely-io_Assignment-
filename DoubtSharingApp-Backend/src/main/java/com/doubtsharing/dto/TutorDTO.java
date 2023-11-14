@@ -36,15 +36,15 @@ public class TutorDTO {
 	@Enumerated(EnumType.STRING)
 	private UserType userType = UserType.ROLE_TUTOR; // tutor
 
-	//@NotNull(message = "User Language must not null")
+	@NotNull(message = "User Language must not null")
 	@Enumerated(EnumType.STRING)
 	private Language userLanguage; // student and tutor language
 
-	//@NotNull(message = "Min Class Grade must not null")
+	@NotNull(message = "Min Class Grade must not null")
 	@Enumerated(EnumType.STRING)
 	private UsersGrade min_grade; // for tutor
 	
-	//@NotNull(message = "Max Class Grade must not null")
+	@NotNull(message = "Max Class Grade must not null")
 	@Enumerated(EnumType.STRING)
 	private UsersGrade max_grade;  // for tutor
 		
