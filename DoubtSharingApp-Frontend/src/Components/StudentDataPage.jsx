@@ -14,6 +14,39 @@ const StudentDataPage = () => {
         window.location.href = "/login";
     };
 
+    const checkTutorDoubt = (doubtId) => {
+        const token = localStorage.getItem("token");
+
+        fetch(`http://localhost:8085/doubt-sharing-app/student/assigne-doubt-to-live-tutor?doubtId=${doubtId}`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+            })
+            .then((tutorData) => {
+                // Update the doubts table based on tutor's data
+                console.log(tutorData);
+                updateDoubtInTable(tutorData);
+            })
+            .catch((error) => console.error("Error checking tutor's doubt:", error));
+    };
+
+    const updateDoubtInTable = (updatedDoubt) => {
+        // Update the doubts table based on the updated doubt
+        setDoubts((prevDoubts) => {
+            // Remove the old doubt (if exists) and add the updated one
+            const filteredDoubts = prevDoubts.filter((doubt) => doubt.doubtRequestId !== updatedDoubt.doubtRequestId);
+            return [updatedDoubt, ...filteredDoubts];
+        });
+    };
+
     const handleAddDoubt = () => {
         const token = localStorage.getItem("token");
 
@@ -32,7 +65,20 @@ const StudentDataPage = () => {
                     }
                     return response.json();
                 })
-                .then((data) => setDoubts((prevDoubts) => [...prevDoubts, data]))
+                .then((data) => {
+                    // If doubt added successfully, check if tutor has received the doubt
+                    const doubtId = data.doubtRequestId;
+
+                    if (doubtId) {
+                        // Update the state with the new doubt
+                        setDoubts((prevDoubts) => [data, ...prevDoubts]);
+
+                        // Check if tutor has received the doubt
+                        checkTutorDoubt(doubtId);
+                    } else {
+                        console.error("Doubt ID not available in the response.");
+                    }
+                })
                 .catch((error) => console.error("Error adding doubt:", error));
         } else {
             console.error("User not authenticated. Redirect to login page.");
@@ -108,6 +154,7 @@ const StudentDataPage = () => {
                         <th>Description</th>
                         <th>Status</th>
                         <th>Resolve Time</th>
+                        <th>Doubt Resolve Description</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -117,8 +164,10 @@ const StudentDataPage = () => {
                             <td>{doubt.doubtSubject}</td>
                             <td>{doubt.doubtTitle}</td>
                             <td>{doubt.doubtDescription}</td>
-                            <td style={{ color: doubt.doubtStatus === "PENDING" ? "red" : "green" }}>{doubt.doubtStatus}</td>
+                            <td style={{ color: doubt.doubtStatus === "PENDING" ? "red" : (doubt.doubtStatus === "RESOLVED" ? "green" : "blue") }}>{doubt.doubtStatus}</td>
+
                             <td>{doubt.resolveTime}</td>
+                            <td>{doubt.doubtResolveDescription === null ? "Please visit after sometime" : `${doubt.doubtResolveDescription}`}</td>
                         </tr>
                     ))}
                 </tbody>

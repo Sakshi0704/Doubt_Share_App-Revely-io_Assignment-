@@ -16,7 +16,7 @@ import com.doubtsharing.models.TutorAvailability;
 public interface TutorAvailabilityRepository extends JpaRepository<TutorAvailability, Integer>{
 	
 	@Query("SELECT t FROM TutorAvailability t where t.onlineStatus = :onlineStatus")
-	public List<TutorAvailability> findByOnlineStatus(@Param("onlineStatus")TutorAvailabilityStatus onlineStatus);
+	public List<TutorAvailability> findByOnlineStatus(@Param("onlineStatus")String onlineStatus);
 	
 	@Query("SELECT t FROM TutorAvailability t JOIN t.user u WHERE u.email = :email")
 	public Optional<TutorAvailability> findTutorAvailabilityByEmail(@Param("email") String email);

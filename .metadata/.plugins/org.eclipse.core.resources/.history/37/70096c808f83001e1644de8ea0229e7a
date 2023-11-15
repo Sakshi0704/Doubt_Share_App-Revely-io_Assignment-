@@ -45,7 +45,7 @@ public class TutorAvailabilityServiceImpl implements TutorAvailabilityService {
     @Scheduled(fixedRate = 3000) // Run every minute
     public void updateLastPingTimeForAvailableTutors() {
         
-    	List<TutorAvailability> tutorAvailability =  tutorAvailablityRepo.findByOnlineStatus(TutorAvailabilityStatus.AVAILABLE);
+    	List<TutorAvailability> tutorAvailability =  tutorAvailablityRepo.findByOnlineStatus(TutorAvailabilityStatus.AVAILABLE.toString());
     	
     	for(TutorAvailability ta : tutorAvailability) {
     		tutorAvailablityRepo.save(ta);
@@ -56,7 +56,7 @@ public class TutorAvailabilityServiceImpl implements TutorAvailabilityService {
 	@Override
 	public List<TutorAvailability> allavailableTutors() throws RecordNotFoundException {
 		List<TutorAvailability> onlineAvailableTutors = tutorAvailablityRepo
-										.findByOnlineStatus(TutorAvailabilityStatus.AVAILABLE);
+										.findByOnlineStatus(TutorAvailabilityStatus.AVAILABLE.toString());
         if (onlineAvailableTutors.isEmpty()) {
             throw new RecordNotFoundException("No Tutors Available Online Currently");
         } 

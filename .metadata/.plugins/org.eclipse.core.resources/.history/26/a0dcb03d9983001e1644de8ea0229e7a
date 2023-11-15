@@ -145,7 +145,7 @@ public class DoubtHandlingServiceImpl implements DoubtHandlingService {
 		}
 
 		Doubt doubt = doubtOpt.get();
-		if (doubt.getDoubtStatus().toString().equals(DoubtStatus.RESOLVED.toString())){
+		if (doubt.equals(DoubtStatus.RESOLVED)) {
 			throw new RecordNotFoundException("Doubt is solved already by tutor " + doubt.getTutor().getUserName());
 		}
 		doubt.setTutor(tutorOpt.get());

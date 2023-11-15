@@ -33,7 +33,7 @@ const Login = () => {
         }
 
         const newToken = response.headers.get("Authorization");
-
+console.log(newToken);
         // Save the token to local storage
         localStorage.setItem("token", newToken);
 

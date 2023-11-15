@@ -71,7 +71,7 @@ public class DoubtHandlerController {
 	//http://localhost:8085/doubt-sharing-app/tutor/doubt-solve/{doubtId}
 	@PostMapping("/tutor/doubt-solve/{doubtId}")
 	public ResponseEntity<Doubt> doubtResolveByTutorHandler(@PathVariable Integer doubtId,
-										@RequestParam String solvedDesc) {  // by tutor only
+										@RequestBody String solvedDesc) {  // by tutor only
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
@@ -97,7 +97,10 @@ public class DoubtHandlerController {
 		return new ResponseEntity<List<Doubt>>(doubts,HttpStatus.OK);
 	}
 	
-	
+	//http://localhost:8085/doubt-sharing-app/student/add-doubt-request
+	//http://localhost:8085/doubt-sharing-app/student/assigne-doubt-to-live-tutor
+	//http://localhost:8085/doubt-sharing-app/tutor/doubt-solve/{doubtId}
+	//http://localhost:8085/doubt-sharing-app/tutor/panding-doubts/{doubtId}
 	//http://localhost:8085/doubt-sharing-app/student/all-doubts/history
 	@GetMapping("/student/all-doubts/history")
 	public ResponseEntity<List<Doubt>> getDoubtRequestHistoryByEmailByRequestTimeDescHandler(){  // by student only

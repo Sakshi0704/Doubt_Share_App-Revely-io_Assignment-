@@ -97,7 +97,10 @@ public class DoubtHandlerController {
 		return new ResponseEntity<List<Doubt>>(doubts,HttpStatus.OK);
 	}
 	
-	
+	//http://localhost:8085/doubt-sharing-app/student/add-doubt-request
+	//http://localhost:8085/doubt-sharing-app/student/assigne-doubt-to-live-tutor
+	//http://localhost:8085/doubt-sharing-app/tutor/doubt-solve/{doubtId}
+	//http://localhost:8085/doubt-sharing-app/tutor/panding-doubts/{doubtId}
 	//http://localhost:8085/doubt-sharing-app/student/all-doubts/history
 	@GetMapping("/student/all-doubts/history")
 	public ResponseEntity<List<Doubt>> getDoubtRequestHistoryByEmailByRequestTimeDescHandler(){  // by student only
