@@ -22,7 +22,7 @@ public class DoubtDTO {
 	    
 	    private LocalDateTime requestTime;
 	    
-	    private DoubtStatus doubtStatus = DoubtStatus.PANDDING; // resolved , padding , assigned
+	    private DoubtStatus doubtStatus = DoubtStatus.PENDING; // resolved , PENDING , assigned
 	   
 	    private String doubtResolveDescription;  // by tutor
 	    
