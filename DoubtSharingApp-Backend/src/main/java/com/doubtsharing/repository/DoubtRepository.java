@@ -6,13 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.doubtsharing.enums.DoubtStatus;
+import com.doubtsharing.enums.TutorAvailabilityStatus;
 import com.doubtsharing.models.Doubt;
 
 public interface DoubtRepository extends JpaRepository<Doubt, Integer> {
 	
 	@Query("SELECT d FROM Doubt d JOIN d.tutor u WHERE u.email = :email AND d.doubtStatus = :doubtStatus ORDER BY d.requestTime DESC")
 	public List<Doubt> findDoubtsByDoubtsStatusByTutorByRequestTimeDesc(@Param("email") String email ,
-										@Param("doubtStatus") String doubtStatus); // by tutor..
+										@Param("doubtStatus")DoubtStatus doubtStatus); // by tutor..
 	
 	@Query("SELECT d FROM Doubt d JOIN d.student s WHERE s.email = :email ORDER BY d.requestTime DESC")
 	public List<Doubt> findDoubtsByStudentByRequestTimeDesc(@Param("email") String email); // by student..

@@ -12,7 +12,7 @@ public interface DoubtHandlingService {
 	public Doubt addDoubtRequest(Doubt doubt,String email) 
 			throws InvalidArgumentException;   // by student only
 	
-	public Doubt tutorAvailableLiveToResolveDoubt(Doubt doubtRequest, String email) 
+	public Doubt tutorAvailableLiveToResolveDoubt(Integer doubtId, String email) 
 			throws InvalidArgumentException;  // by student only
 	
 	public Doubt doubtResolveByTutor(Integer doubtId, String solvedDesc, String email) 

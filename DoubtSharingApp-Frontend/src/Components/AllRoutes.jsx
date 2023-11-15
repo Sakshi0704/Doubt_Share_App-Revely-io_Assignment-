@@ -6,6 +6,7 @@ import HomePage from "./HomePage";
 import StudentSignup from "./StudentSignup";
 import TutorSignup from "./TutorSignup";
 import StudentDataPage from "./StudentDataPage";
+import TutorDataPage from "./TutorDataPage";
 
 const AllRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AllRoutes = () => {
         <Route path="/student_login" element={<StudentSignup />} />
         <Route path="/tutor_login" element={<TutorSignup />} />
         <Route path="/student_data" element={<StudentDataPage />} />
+        <Route path="/tutor_data" element={<TutorDataPage />} />
       </Routes>
     </div>
   );

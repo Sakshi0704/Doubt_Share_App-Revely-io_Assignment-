@@ -10,6 +10,7 @@ import com.doubtsharing.exception.InvalidArgumentException;
 import com.doubtsharing.exception.RecordNotFoundException;
 import com.doubtsharing.models.Doubt;
 import com.doubtsharing.models.TutorAvailability;
+import com.doubtsharing.dto.StudentDTO;
 import com.doubtsharing.enums.DoubtStatus;
 import com.doubtsharing.enums.TutorAvailabilityStatus;
 import com.doubtsharing.models.Users;
@@ -52,24 +53,28 @@ public class DoubtHandlingServiceImpl implements DoubtHandlingService {
 	}
 
 	@Override
-	public Doubt tutorAvailableLiveToResolveDoubt(Doubt doubtRequest, String email) throws InvalidArgumentException {
-		if (doubtRequest == null) {
+	public Doubt tutorAvailableLiveToResolveDoubt(Integer doubtId, String email) throws InvalidArgumentException {
+		if(doubtId<=0) {
+			throw new InvalidArgumentException("Invalid argument is assigned");
+		}
+		
+		Optional<Doubt> doubtRequestOpt = doubtRepository.findById(doubtId);
+		
+		if (doubtRequestOpt.isEmpty()) {
 			throw new InvalidArgumentException("Invalid doubt request.");
 		}
 
+		Doubt doubtRequest = doubtRequestOpt.get();
+		
 		if (!doubtRequest.getDoubtStatus().equals(DoubtStatus.PENDING)) {
 			throw new InvalidArgumentException("Doubt request is not in the PENDING status.");
 		}
-
+		
 		Users student = doubtRequest.getStudent();
 
-		if (student == null || !student.getEmail().equals(email)) {
-			throw new InvalidArgumentException("Invalid user who give this doubt to resolve...");
-		}
-
 		List<TutorAvailability> availableTutors = tutorAvailableRepository.findTutorsByOnlineStatusBySubject(
-				TutorAvailabilityStatus.AVAILABLE.toString(), doubtRequest.getDoubtSubject().toString(),
-				student.getUserLanguage().toString());
+				TutorAvailabilityStatus.AVAILABLE, doubtRequest.getDoubtSubject(),
+				student.getUserLanguage());
 		// Iterate through available tutors to find a suitable match......
 		for (TutorAvailability tutorAvailability : availableTutors) {
 
@@ -112,7 +117,7 @@ public class DoubtHandlingServiceImpl implements DoubtHandlingService {
 			throw new InvalidArgumentException("Invalid email is given of tutor");
 
 		List<Doubt> listOfDoubts = doubtRepository.findDoubtsByDoubtsStatusByTutorByRequestTimeDesc(email,
-				DoubtStatus.ASSIGNED.toString());
+				DoubtStatus.ASSIGNED);
 
 		if (listOfDoubts.isEmpty()) {
 			throw new RecordNotFoundException("For Tutor " + email + " no padding doubt left");

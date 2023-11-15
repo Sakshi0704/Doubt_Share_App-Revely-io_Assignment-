@@ -31,7 +31,14 @@ public class DoubtHandlerController {
 
 	@Autowired
 	private DoubtHandlingService doubtHandlingService;
+/*	
+	{
+	    "doubtSubject" : "MATHS",
+	    "doubtTitle" : "on tringle chapter",
+	    "doubtDescription" : "having two sides need to find third side of tringle"
+	}
 	
+*/
 	
 	//http://localhost:8085/doubt-sharing-app/student/add-doubt-request
 	@PostMapping("/student/add-doubt-request") // only by student 
@@ -48,13 +55,17 @@ public class DoubtHandlerController {
 	
 	//http://localhost:8085/doubt-sharing-app/student/assigne-doubt-to-live-tutor
 	@PostMapping("/student/assigne-doubt-to-live-tutor")
-	public ResponseEntity<Doubt> tutorAvailableLiveToResolveDoubtHandler(@Valid @RequestBody Doubt doubtRequest){  // only by student
+	public ResponseEntity<Doubt> tutorAvailableLiveToResolveDoubtHandler(@RequestParam Integer doubtId){  // only by student
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
+
 		String email = authentication.getName();
 		
-		return new ResponseEntity<Doubt>(doubtRequest,HttpStatus.OK);
+		Doubt assignDoubt = doubtHandlingService.tutorAvailableLiveToResolveDoubt(doubtId,email);
+		
+		
+		return new ResponseEntity<Doubt>(assignDoubt,HttpStatus.OK);
 	}
 	
 	//http://localhost:8085/doubt-sharing-app/tutor/doubt-solve/{doubtId}
@@ -73,8 +84,8 @@ public class DoubtHandlerController {
 	}
 	
 
-	//http://localhost:8085/doubt-sharing-app/tutor/panding-doubts/{doubtId}
-	@GetMapping("/tutor/panding-doubts/{doubtId}")
+	//http://localhost:8085/doubt-sharing-app/tutor/pending-doubts
+	@GetMapping("/tutor/pending-doubts")
 	public ResponseEntity<List<Doubt>> panddingDoubtsForSpecificTutorByRequestTimeDescHandler() {  // by tutor only
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

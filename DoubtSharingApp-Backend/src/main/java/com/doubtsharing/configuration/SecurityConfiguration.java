@@ -47,10 +47,10 @@ public class SecurityConfiguration {
 	
 
 	//http://localhost:8085/doubt-sharing-app/tutor/doubt-solve/{doubtId}
-	//http://localhost:8085/doubt-sharing-app/tutor/panding-doubts/{doubtId}
+	//http://localhost:8085/doubt-sharing-app/tutor/pending-doubts
 	public static final String TUTOR_URLS[] = {
-					"/doubt-sharing-app/tutor/panding-doubts/{doubtId}",
-					"/doubt-sharing-app/tutor/panding-doubts/{doubtId}"
+					"http://localhost:8085/doubt-sharing-app/tutor/doubt-solve/{doubtId}",
+					"/doubt-sharing-app/tutor/pending-doubts"
 				};
 	
 	@Bean

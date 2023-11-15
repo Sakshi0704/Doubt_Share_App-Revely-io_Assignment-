@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.doubtsharing.enums.Language;
+import com.doubtsharing.enums.Subject;
+import com.doubtsharing.enums.TutorAvailabilityStatus;
 import com.doubtsharing.models.TutorAvailability;
 
 public interface TutorAvailabilityRepository extends JpaRepository<TutorAvailability, Integer>{
@@ -31,7 +34,7 @@ public interface TutorAvailabilityRepository extends JpaRepository<TutorAvailabi
 			+ "WHERE t.onlineStatus = :onlineStatus "
 			+ "AND u.subjectExpertise = :subject "
 			+ "AND u.userLanguage = :userLanguage")
-	public List<TutorAvailability> findTutorsByOnlineStatusBySubject(@Param("onlineStatus") String onlineStatus, 
-	                                                               @Param("subject") String subject, 
-	                                                               @Param("userLanguage") String userLanguage);
+	public List<TutorAvailability> findTutorsByOnlineStatusBySubject(@Param("onlineStatus") TutorAvailabilityStatus onlineStatus, 
+	                                                               @Param("subject") Subject subject, 
+	                                                               @Param("userLanguage") Language userLanguage);
 }

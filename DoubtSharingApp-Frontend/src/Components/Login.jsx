@@ -43,8 +43,14 @@ const Login = () => {
         console.log(data);
 
         window.alert("Login successful!");
+        if (data.userType === "ROLE_STUDENT") {
 
-        window.location.href = "/student_data";
+          window.location.href = "/student_data";
+        }
+        else {
+          window.location.href = "/tutor_data";
+
+        }
       })
       .catch((error) => {
         console.error("Error:", error);
