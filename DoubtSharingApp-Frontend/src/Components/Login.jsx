@@ -41,11 +41,9 @@ const Login = () => {
       })
       .then((data) => {
         console.log(data);
-        // Handle the response data as needed
 
         window.alert("Login successful!");
 
-        // Navigate to the student_data page
         window.location.href = "/student_data";
       })
       .catch((error) => {

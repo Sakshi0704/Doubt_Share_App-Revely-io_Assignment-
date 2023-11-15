@@ -27,8 +27,8 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    margin-bottom: 20px; /* Add margin at the bottom for better spacing */
-    display: inline-block; /* Center the table horizontally */
+    margin-bottom: 20px; 
+    display: inline-block; 
   }
   
   th, td {
@@ -46,5 +46,4 @@
     color: #333;
   }
   
-  /* Add more styles as needed */
   
