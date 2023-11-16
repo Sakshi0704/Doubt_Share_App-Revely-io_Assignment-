@@ -17,8 +17,6 @@
     <fullyQualifiedTypeName name="org.springframework.security.crypto.password.PasswordEncoder"/>
     <fullyQualifiedTypeName name="com.doubtsharing.services.UserService"/>
     <fullyQualifiedTypeName name="java.util.List"/>
-    <fullyQualifiedTypeName name="com.doubtsharing.enums.Language"/>
-    <fullyQualifiedTypeName name="com.doubtsharing.enums.Subject"/>
     <fullyQualifiedTypeName name="jakarta.validation.constraints.NotBlank"/>
     <fullyQualifiedTypeName name="com.doubtsharing.services.DoubtHandlingService"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
@@ -36,18 +34,14 @@
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Modifying"/>
     <fullyQualifiedTypeName name="java.time.LocalDate"/>
     <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
-    <fullyQualifiedTypeName name="com.doubtsharing.enums.TutorAvailabilityStatus"/>
     <fullyQualifiedTypeName name="com.doubtsharing.enums.UserType"/>
     <fullyQualifiedTypeName name="com.doubtsharing.dto.TutorDTO"/>
-    <fullyQualifiedTypeName name="com.doubtsharing.dto.StudentDTO"/>
     <fullyQualifiedTypeName name="com.doubtsharing.enums.UsersGrade"/>
-    <fullyQualifiedTypeName name="com.doubtsharing.enums.DoubtStatus"/>
     <fullyQualifiedTypeName name="org.springframework.data.repository.query.Param"/>
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Query"/>
     <fullyQualifiedTypeName name="org.springframework.security.core.context.SecurityContextHolder"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseBody"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
@@ -60,4 +54,10 @@
     <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnore"/>
     <fullyQualifiedTypeName name="com.doubtsharing.models.Users"/>
     <fullyQualifiedTypeName name="org.springframework.security.config.Customizer"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
+    <fullyQualifiedTypeName name="com.doubtsharing.dto.StudentDTO"/>
+    <fullyQualifiedTypeName name="com.doubtsharing.enums.Subject"/>
+    <fullyQualifiedTypeName name="com.doubtsharing.enums.Language"/>
+    <fullyQualifiedTypeName name="com.doubtsharing.enums.TutorAvailabilityStatus"/>
+    <fullyQualifiedTypeName name="com.doubtsharing.enums.DoubtStatus"/>
 </qualifiedTypeNameHistroy>

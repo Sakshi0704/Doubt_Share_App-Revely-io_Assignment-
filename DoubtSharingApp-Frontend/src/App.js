@@ -10,7 +10,6 @@ function App() {
       <Navbar />
       <br />
       <AllRoutes />
-
     </div>
   );
 }

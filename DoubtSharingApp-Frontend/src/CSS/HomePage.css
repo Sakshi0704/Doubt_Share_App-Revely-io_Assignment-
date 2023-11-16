@@ -1,0 +1,23 @@
+/* HomePage.css */
+
+.homepage-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px;
+    height: 70vh;
+}
+
+.text-container {
+    max-width: 50%;
+}
+
+.homepage-image {
+    width: 40%;
+    height: auto;
+    border-radius: 8px;
+}
+
+h2 {
+    font-weight: lighter;
+}

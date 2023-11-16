@@ -8,6 +8,8 @@ const StudentDataPage = () => {
         doubtTitle: "",
         doubtDescription: "",
     });
+   
+ 
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -87,6 +89,7 @@ const StudentDataPage = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
+       setInterval(()=>{
 
         if (token) {
             fetch("http://localhost:8085/doubt-sharing-app/student/all-doubts/history", {
@@ -105,6 +108,8 @@ const StudentDataPage = () => {
         } else {
             console.error("User not authenticated. Redirect to login page.");
         }
+       },5000)
+       
     }, []);
 
     return (

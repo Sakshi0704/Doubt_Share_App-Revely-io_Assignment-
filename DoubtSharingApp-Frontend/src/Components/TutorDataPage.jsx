@@ -75,23 +75,25 @@ const TutorDataPage = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8085/doubt-sharing-app/tutor/pending-doubts", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
+    setInterval(()=>{
+      fetch("http://localhost:8085/doubt-sharing-app/tutor/pending-doubts", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .then((data) => {
-        console.log("Fetched data:", data);
-        setDoubts(data);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
-  }, [token]);
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Fetched data:", data);
+          setDoubts(data);
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    },5000)
+  }, [doubts]);
 
   return (
     <div>
